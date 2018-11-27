@@ -32,8 +32,10 @@ static void on_keepalive_timer(__unused evutil_socket_t fd,
 	/*
 	 * libssh-0.8.4 or higher have a broken keepalive implementation due
 	 * to packet filtering.
+	 * while debian stretch comes with version 0.7.3, the paches on top,
+	 * namely `deb9u1`, introduce the exact same issue.
 	 */
-	if (ssh_version(SSH_VERSION_INT(0,8,4)))
+	if (ssh_version(SSH_VERSION_INT(0,7,3)))
 		return;
 
 	if (ssh_send_keepalive(client->session) == SSH_ERROR)
